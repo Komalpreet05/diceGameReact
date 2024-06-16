@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-const NumberSelector = () => {
+const NumberSelector = ({ selectedNumber, setSelectedNumber, error, setError }) => {
     const arr = [1, 2, 3, 4, 5, 6];
-    const [selectedNumber, setSelectedNumber] = useState(null);
     console.log(selectedNumber);
-    const [isSelected, setIsSelected] = useState(false);
+    // const [isSelected, setIsSelected] = useState(false);
 
-    function selectionHandling(num) {
-        setSelectedNumber(num)
-    }
+    // function selectionHandling(num) {
+    //     setSelectedNumber(num);
+    // }
 
 
 
     // useEffect(() => {
     //     setIsSelected()
     // })
+
+    const numberSelectorHandler = (val) => {
+        setSelectedNumber(val);
+        setError("");
+    }
     return (
-        <div className='flex gap-5  '>
-            {/* {
+
+        <div className='flex flex-col items-end '>
+            <p className='text-red-600'>{error}</p>
+            <div className='internal flex gap-[24px] '>
+                {/* {
                 arr.map((e) => {
                     return (
                         <Box>{e}</Box>
@@ -27,13 +34,19 @@ const NumberSelector = () => {
             } */}
 
 
-            {/* or  */}
+                {/* or  */}
 
-            {
-                arr.map((val, i) => (
-                    <Box key={i} onClick={() => selectionHandling(val)}>{val}</Box>
-                ))
-            }
+                {
+                    arr.map((val, i) => (
+                        <Box
+                            isSelected={
+                                val === selectedNumber
+                            }
+                            key={i} onClick={() => numberSelectorHandler(val)}>{val}</Box>
+                    ))
+                }
+            </div>
+            <p className='text-[24px] font-bold'>Select Number</p>
         </div>
     )
 }
@@ -50,5 +63,6 @@ font-size: 24px;
 font-weight: 700;
 cursor: pointer;    
 background-color: ${(props) => props.isSelected ? "black" : "white"};
+color: ${(props) => !props.isSelected ? "black" : "white"};
 
 `;
